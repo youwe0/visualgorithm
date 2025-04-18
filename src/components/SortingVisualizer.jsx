@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Controls from "./Controls";
 import { generateArray } from "../Utils/GenerateArray";
-import { bubbleSort } from "../algorithms/sorting/BubbleSort";
-import { selectionSort } from "../algorithms/sorting/SelectionSort";
-import { mergeSort } from "../algorithms/sorting/MergeSort";
+import { bubbleSort } from "../Algorithms/sorting/BubbleSort";
+import { selectionSort } from "../Algorithms/sorting/SelectionSort";
+import { mergeSort } from "../Algorithms/sorting/MergeSort";
 
 const SortingVisualizer = () => {
   const [array, setArray] = useState([]);

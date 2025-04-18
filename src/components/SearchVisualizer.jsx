@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { binarySearch } from "../algorithms/Searching/binarySearch";
-import { jumpSearch } from "../algorithms/Searching/jump";
+import { binarySearch } from "../Algorithms/Searching/BinarySearch";
+import { jumpSearch } from "../Algorithms/Searching/Jump";
 
 
 const generateStudents = (count = 30) => {

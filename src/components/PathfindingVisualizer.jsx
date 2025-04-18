@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { astar } from "../algorithms/pathfinding/astar";
-import { dfs } from "../algorithms/pathfinding/dfs";
-import { bfs } from "../algorithms/pathfinding/bfs";
+import { astar } from "../Algorithms/Pathfinding/Astar";
+import { dfs } from "../Algorithms/Pathfinding/Dfs";
+import { bfs } from "../Algorithms/Pathfinding/Bfs";
 
 const SMALL_GRID = { rows: 18, cols: 20 };
 const LARGE_GRID = { rows: 20, cols: 40 };
