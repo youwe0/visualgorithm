@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { binarySearch } from "../Algorithms/Searching/BinarySearch";
 import { jumpSearch } from "../Algorithms/Searching/Jump";
 
-
+// Function to generate students
 const generateStudents = (count = 30) => {
     const students = Array.from({ length: count }, (_, i) => ({
         id: i + 1,
@@ -20,11 +20,13 @@ const SearchVisualizer = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [running, setRunning] = useState(false);
 
-    
-  const playCompletionSound = () => {
-    const audio = new Audio("/public/Sound Effect - Tun Tun Tuuuuuuun - TOP 7 sound effects.mp3");
-    audio.play();
-  };
+    const [complexity, setComplexity] = useState({ time: "", space: "" });
+
+    // Algorithm complexities
+    const algorithmComplexities = {
+        binary: { time: "O(log n)", space: "O(1)" },
+        jump: { time: "O(√n)", space: "O(1)" },
+    };
 
     const handleGenerate = () => {
         setStudents(generateStudents());
@@ -45,10 +47,10 @@ const SearchVisualizer = () => {
             searchSteps = jumpSearch(rolls, parseInt(targetRoll));
         }
 
-
         setSteps(searchSteps);
         setCurrentStep(0);
         setRunning(true);
+        setComplexity(algorithmComplexities[algorithm]);
         animate(searchSteps);
     };
 
@@ -58,28 +60,20 @@ const SearchVisualizer = () => {
             await new Promise((r) => setTimeout(r, 500));
         }
         setRunning(false);
-        playCompletionSound();
     };
 
     const current = steps[currentStep] || {};
 
-
-
-
-
-
-
-
-
-
-
-
-
     return (
         <div className="p-4 bg-blue-50 min-h-screen">
-            <h2 className="text-2xl font-bold text-center mb-4">
-                Search Visualizer (Classroom Style)
-            </h2>
+            <h2 className="text-2xl font-bold text-center mb-4">Search Visualizer (Classroom Style)</h2>
+
+            {/* Algorithm Info
+            <div className="absolute top-2 left-2 w-[300px] bg-gray-400 rounded-md px-4 py-2 shadow-md">
+                <h3 className="text-xl font-semibold">{algorithm === "binary" ? "Binary Search" : "Jump Search"}</h3>
+                <p>Time Complexity: {complexity.time}</p>
+                <p>Space Complexity: {complexity.space}</p>
+            </div> */}
 
             <div className="flex flex-wrap sm:flex-row items-center justify-center gap-4 mb-6">
                 <button
@@ -104,8 +98,6 @@ const SearchVisualizer = () => {
                 >
                     <option value="binary">Binary Search</option>
                     <option value="jump">Jump Search</option>
-
-                    {/*  bhai or algorithum yha pe  daal option dene ke liye  */}
                 </select>
 
                 <button
@@ -116,7 +108,12 @@ const SearchVisualizer = () => {
                     Start Search
                 </button>
             </div>
-
+            {/* Algorithm Info */}
+            <div className=" top-2 left-2 w-[300px] bg-gray-400 rounded-md px-4 py-2 shadow-md my-10">
+                <h3 className="text-xl font-semibold">{algorithm === "binary" ? "Binary Search" : "Jump Search"}</h3>
+                <p>Time Complexity: {complexity.time}</p>
+                <p>Space Complexity: {complexity.space}</p>
+            </div>
             <div className="grid grid-cols-5 sm:grid-cols-10 gap-4 justify-center">
                 {students.map((student, index) => {
                     const isMid = current.mid === index;

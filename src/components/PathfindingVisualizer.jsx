@@ -18,7 +18,6 @@ const createNode = (row, col, start, end) => ({
   f: Infinity,
 });
 
-
 const PathfindingVisualizer = () => {
   const [grid, setGrid] = useState([]);
   const [start, setStart] = useState({ row: 5, col: 5 });
@@ -30,18 +29,22 @@ const PathfindingVisualizer = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [algorithm, setAlgorithm] = useState("astar");
 
-
+  const [complexity, setComplexity] = useState({ time: "", space: "" });
 
   const dimensions = isMobile ? SMALL_GRID : LARGE_GRID;
-
-  const playCompletionSound = () => {
-    const audio = new Audio("/public/Sound Effect - Tun Tun Tuuuuuuun - TOP 7 sound effects.mp3");
-    audio.play();
-  };
 
   useEffect(() => {
     generateGrid();
   }, [dimensions]);
+
+  useEffect(() => {
+    const algorithmComplexities = {
+      astar: { time: "O(E + V log V)", space: "O(V)" },
+      dfs: { time: "O(V + E)", space: "O(V)" },
+      bfs: { time: "O(V + E)", space: "O(V)" },
+    };
+    setComplexity(algorithmComplexities[algorithm] || { time: "", space: "" });
+  }, [algorithm]);
 
   const generateGrid = () => {
     const newGrid = [];
@@ -173,14 +176,7 @@ const PathfindingVisualizer = () => {
       })
     );
     setGrid(newGrid);
-
   };
-
-
-
-
-
-
 
   return (
     <div className="min-h-screen p-4 bg-gray-500 ">
@@ -195,7 +191,6 @@ const PathfindingVisualizer = () => {
           <option value="astar">A*</option>
           <option value="dfs">DFS</option>
           <option value="bfs">BFS</option>
-          {/* bhai or option yha pe daal agar or algorithm add karne he to */}
         </select>
 
         <button
@@ -233,6 +228,13 @@ const PathfindingVisualizer = () => {
         >
           Toggle Mode {isMobile ? "Desktop" : "Mobile"}
         </button>
+      </div>
+
+      {/* Algorithm Info */}
+      <div className="absolute top-10 left-2 w-[300px] bg-gray-400 rounded-md px-4 py-2 shadow-md my-10">
+        <h3 className="text-xl font-semibold">{algorithm.toUpperCase()} Algorithm</h3>
+        <p>Time Complexity: {complexity.time}</p>
+        <p>Space Complexity: {complexity.space}</p>
       </div>
 
       <div
