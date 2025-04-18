@@ -20,6 +20,12 @@ const SearchVisualizer = () => {
     const [currentStep, setCurrentStep] = useState(0);
     const [running, setRunning] = useState(false);
 
+    
+  const playCompletionSound = () => {
+    const audio = new Audio("/public/Sound Effect - Tun Tun Tuuuuuuun - TOP 7 sound effects.mp3");
+    audio.play();
+  };
+
     const handleGenerate = () => {
         setStudents(generateStudents());
         setSteps([]);
@@ -52,6 +58,7 @@ const SearchVisualizer = () => {
             await new Promise((r) => setTimeout(r, 500));
         }
         setRunning(false);
+        playCompletionSound();
     };
 
     const current = steps[currentStep] || {};

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Controls from "./Controls";
-import { generateArray } from "../utils/generateArray";
-import { bubbleSort } from "../algorithms/sorting/bubbleSort";
-import { selectionSort } from "../algorithms/sorting/selectionSort";
-import { mergeSort } from "../algorithms/sorting/mergeSort";
+import { generateArray } from "../Utils/GenerateArray";
+import { bubbleSort } from "../algorithms/sorting/BubbleSort";
+import { selectionSort } from "../algorithms/sorting/SelectionSort";
+import { mergeSort } from "../algorithms/sorting/MergeSort";
 
 const SortingVisualizer = () => {
   const [array, setArray] = useState([]);
@@ -73,7 +73,7 @@ const SortingVisualizer = () => {
     }
 
     setIsRunning(false);
-    playCompletionSound(); // 🔊 Play sound on completion
+    playCompletionSound(); 
 
   };
 

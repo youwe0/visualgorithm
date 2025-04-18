@@ -18,6 +18,7 @@ const createNode = (row, col, start, end) => ({
   f: Infinity,
 });
 
+
 const PathfindingVisualizer = () => {
   const [grid, setGrid] = useState([]);
   const [start, setStart] = useState({ row: 5, col: 5 });
@@ -32,6 +33,11 @@ const PathfindingVisualizer = () => {
 
 
   const dimensions = isMobile ? SMALL_GRID : LARGE_GRID;
+
+  const playCompletionSound = () => {
+    const audio = new Audio("/public/Sound Effect - Tun Tun Tuuuuuuun - TOP 7 sound effects.mp3");
+    audio.play();
+  };
 
   useEffect(() => {
     generateGrid();
@@ -167,8 +173,8 @@ const PathfindingVisualizer = () => {
       })
     );
     setGrid(newGrid);
-  };
 
+  };
 
 
 
@@ -225,7 +231,7 @@ const PathfindingVisualizer = () => {
           onClick={() => setIsMobile(!isMobile)}
           className="bg-gray-600 text-white px-4 py-2 rounded"
         >
-          Toggle Mode {isMobile ? "Desktop" : "Mobile"} 
+          Toggle Mode {isMobile ? "Desktop" : "Mobile"}
         </button>
       </div>
 
