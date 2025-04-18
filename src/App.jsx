@@ -4,7 +4,7 @@ import SortingVisualizer from "./components/SortingVisualizer";
 import SearchVisualizer from "./components/SearchVisualizer";
 import PathfindingVisualizer from "./components/PathfindingVisualizer";
 import Footer from "./components/Footer";
-import GameOfLife from "./components/Gameoflife";
+// import  Lifekagame from "./components/Lifekagame";
 
 
 const App = () => {
@@ -18,7 +18,7 @@ const App = () => {
             <Route path="/sorting" element={<SortingVisualizer />} />
             <Route path="/pathfinding" element={<PathfindingVisualizer />} />
             <Route path="/search" element={<SearchVisualizer />} />
-            <Route path="/Gameoflife" element={<GameOfLife/>} />
+            {/* <Route path="/Lifekagame" element={<Lifekagame/>} /> */}
 
             {/* Default route, in case no match */}
             <Route path="*" element={<PathfindingVisualizer />} />
