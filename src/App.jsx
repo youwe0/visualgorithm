@@ -18,7 +18,7 @@ const App = () => {
             <Route path="/sorting" element={<SortingVisualizer />} />
             <Route path="/pathfinding" element={<PathfindingVisualizer />} />
             <Route path="/search" element={<SearchVisualizer />} />
-            <Route path="/Gameoflife" element={<Gameoflife/>} />
+            <Route path="/Gameoflife" element={<GameOfLife/>} />
 
             {/* Default route, in case no match */}
             <Route path="*" element={<PathfindingVisualizer />} />
