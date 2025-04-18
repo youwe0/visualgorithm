@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+
+.node {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+}
+
+.node-visited {
+  background-color: lightblue;
+}
+
+.node-start {
+  background-color: green;
+}
+
+.node-end {
+  background-color: red;
+}
+
+.node-wall {
+  background-color: black;
+}
+
+
+
+
+/* Slide-in animation for components  */
+.slide-enter {
+  transform: translateX(-100%); /* Start off-screen (left) */
+  opacity: 0;
+}
+
+.slide-enter-active {
+  transform: translateX(0); /* Slide in to original position */
+  opacity: 1;
+  transition: transform 200ms ease-out, opacity 200ms ease-out; /* Smooth slide and fade-in */
+}
+
+.slide-exit {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-exit-active {
+  transform: translateX(100%); /* Slide out to the right */
+  opacity: 0;
+  transition: transform 200ms ease-in, opacity 200ms ease-in; /* Smooth slide and fade-out */
+}
