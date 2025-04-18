@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Controls from "./Controls";
 import { generateArray } from "../Utils/GenerateArray";
-import { bubbleSort } from "../Algorithms/Sorting/bubbleSort";
+import { bubbleSort } from "../Algorithms/Sorting/BubbleSort";
 import { selectionSort } from "../Algorithms/Sorting/SelectionSort";
 import { mergeSort } from "../Algorithms/Sorting/MergeSort";
 
