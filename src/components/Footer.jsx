@@ -34,7 +34,7 @@ const Footer = () => {
         Pathfinding alorithm
       </NavLink>
       <NavLink
-        to="/GameofLife"
+        to="/Gameoflifeee"
         className={({ isActive }) =>
           `${baseClass} ${isActive ? activeClass : inactiveClass}`
         }
