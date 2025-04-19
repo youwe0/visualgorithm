@@ -14,7 +14,7 @@ const generateEmptyGrid = () => {
   );
 };
 
-export default function GameOfLife() {
+export default function Lifegame() {
   const [grid, setGrid] = useState(generateEmptyGrid);
   const [running, setRunning] = useState(false);
   const runningRef = useRef(running);
