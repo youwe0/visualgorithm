@@ -44,7 +44,7 @@ const Controls = ({
         <input
           type="range"
           min="10"
-          max="50"
+          max="29"
           value={size}
           onChange={(e) => setSize(e.target.value)}
           disabled={isRunning}

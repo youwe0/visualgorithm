@@ -5,29 +5,30 @@ import SearchVisualizer from "./components/SearchVisualizer";
 import PathfindingVisualizer from "./components/PathfindingVisualizer";
 import Footer from "./components/Footer";
 import GameOfLife from "./components/Lifegame";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
-    
-      <div className="min-h-screen flex flex-col">
-        <div className="flex-grow">
-    
-          <Routes>
-            {/* Define the routes here */}
-            <Route path="/sorting" element={<SortingVisualizer />} />
-            <Route path="/pathfinding" element={<PathfindingVisualizer />} />
-            <Route path="/search" element={<SearchVisualizer />} />
-            <Route path="/Lifegame" element={<GameOfLife/>} />
-            
+    <div className="min-h-screen flex flex-col">
+      <div className="flex-grow">
+        <Navbar />
 
-            {/* Default route, in case no match */}
-            <Route path="*" element={<PathfindingVisualizer />} />
-          </Routes>
-        </div>
-        <Footer />
+        <Routes>
+          {/* Define the routes here */}
+          <Route path="/pathfinding" element={<PathfindingVisualizer />} />
+          <Route path="/sorting" element={<SortingVisualizer />} />
+          <Route path="/search" element={<SearchVisualizer />} />
+          <Route path="/Lifegame" element={<GameOfLife />} />
+          {/* <Route path="/Lifegame" element={<Landing/>} /> */}
+
+
+          {/* Default route, in case no match */}
+          <Route path="*" element={<PathfindingVisualizer />} />
+
+        </Routes>
       </div>
-    
-
+      <Footer />
+    </div>
   );
 };
 

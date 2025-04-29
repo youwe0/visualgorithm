@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import Controls from "./Controls";
 import { generateArray } from "../Utils/GenerateArray";
@@ -12,13 +13,13 @@ const SortingVisualizer = () => {
   const [algorithm, setAlgorithm] = useState("bubbleSort");
   const [isRunning, setIsRunning] = useState(false);
   const [complexity, setComplexity] = useState({ time: "", space: "" });
+  const [swappingIndices, setSwappingIndices] = useState([]); // NEW
 
   const playCompletionSound = () => {
     const audio = new Audio("/public/Sound Effect - Tun Tun Tuuuuuuun - TOP 7 sound effects.mp3");
     audio.play();
   };
 
-  // Algorithm complexities
   const algorithmComplexities = {
     bubbleSort: { time: "O(n^2)", space: "O(1)" },
     selectionSort: { time: "O(n^2)", space: "O(1)" },
@@ -53,32 +54,59 @@ const SortingVisualizer = () => {
 
       if (type === "compare") {
         indices.forEach(idx => newArray[idx].color = "compare");
-      } else if (type === "swap") {
+        setArray(newArray);
+        await sleep(100 - speed);
+      } 
+      else if (type === "swap") {
         const [i, j] = indices;
+
+        // Highlight the swapping elements first
+        setSwappingIndices([i, j]);
+        setArray(prev =>
+          prev.map((bar, idx) => ({
+            ...bar,
+            color: indices.includes(idx) ? "swap" : bar.color,
+          }))
+        );
+        await sleep(200 - speed);
+
+        // Perform swap after highlighting
         const temp = newArray[i].value;
         newArray[i].value = newArray[j].value;
         newArray[j].value = temp;
-        newArray[i].color = "swap";
-        newArray[j].color = "swap";
-      } else if (type === "overwrite") {
+        setArray(newArray);
+
+        await sleep(200 - speed);
+
+        setSwappingIndices([]);
+      } 
+      else if (type === "overwrite") {
         const [idx] = indices;
         newArray[idx].value = newVal;
         newArray[idx].color = "swap";
-      } else if (type === "sorted") {
+        setArray(newArray);
+        await sleep(100 - speed);
+      } 
+      else if (type === "sorted") {
         indices.forEach(idx => newArray[idx].color = "sorted");
+        setArray(newArray);
+        await sleep(50);
       }
 
-      setArray(newArray);
-
-      await new Promise(resolve => setTimeout(resolve, 100 - speed));
-
+      // Reset colors (except sorted)
       setArray(prev =>
-        prev.map(bar => ({ ...bar, color: bar.color === "sorted" ? "sorted" : "default", })))
+        prev.map(bar => ({
+          ...bar,
+          color: bar.color === "sorted" ? "sorted" : "default",
+        }))
+      );
     }
 
     setIsRunning(false);
     playCompletionSound();
   };
+
+  const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
   return (
     <div>
@@ -94,14 +122,16 @@ const SortingVisualizer = () => {
         isRunning={isRunning}
       />
 
-      
-
       {/* Array as Boxes */}
       <div className="w-full flex flex-wrap justify-center items-center gap-2 bg-gray-100 rounded-lg p-4 shadow-inner my-1">
         {array.map((item, index) => (
           <div
             key={index}
-            className={`w-10 h-10 flex items-center justify-center text-white font-semibold rounded ${getColorClass(item.color)}`}
+            className={`w-10 h-10 flex items-center justify-center text-white font-semibold rounded
+              ${getColorClass(item.color)}
+              ${swappingIndices.includes(index) ? "ring-4 ring-red-500 scale-110" : ""}
+              transition-all duration-300
+            `}
           >
             {item.value}
           </div>
@@ -122,7 +152,11 @@ const SortingVisualizer = () => {
           {array.map((item, index) => (
             <div
               key={index}
-              className={`w-[6px] md:w-[10px] rounded-t transition-all duration-500 ${getColorClass(item.color)}`}
+              className={`w-[6px] md:w-[10px] rounded-t 
+                ${getColorClass(item.color)}
+                ${swappingIndices.includes(index) ? "ring-4 ring-red-500 scale-110" : ""}
+                transition-all duration-300 ease-in-out
+              `}
               style={{ height: `${item.value * 2.2}px` }}
             ></div>
           ))}

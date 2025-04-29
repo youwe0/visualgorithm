@@ -1,5 +1,3 @@
-// src/algorithms/binarySearch.js
-
 export function binarySearch(arr, target) {
     const steps = [];
     let left = 0;
