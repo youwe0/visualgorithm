@@ -97,9 +97,9 @@ export default function Lifegame() {
 
   return (
     <div className="min-h-screen bg-[#050505] relative overflow-hidden">
+      <FallingSymbols />
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-mesh opacity-30" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-50" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}

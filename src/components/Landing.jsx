@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import FallingSymbols from "./FallingSymbols";
 
 const Landing = () => {
   const algorithms = [
@@ -68,7 +69,7 @@ const Landing = () => {
     <div className="min-h-screen bg-[#050505] relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-mesh opacity-50" />
-      <div className="absolute inset-0 bg-grid-pattern" />
+      <FallingSymbols />
 
       {/* Animated Gradient Orbs */}
       <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/20 rounded-full blur-[120px] animate-float" />
