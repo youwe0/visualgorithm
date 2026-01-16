@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { jumpSearch } from "../Algorithms/Searching/Jump";
 import { binarySearch } from "../Algorithms/Searching/BinarySearch";
+import FallingSymbols from "./FallingSymbols";
 
 const generateStudents = (count = 30) => {
   const students = Array.from({ length: count }, (_, i) => ({
@@ -106,7 +107,7 @@ const SearchVisualizer = () => {
     <div className="min-h-screen bg-[#050505] relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-mesh opacity-30" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-50" />
+      <FallingSymbols />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}

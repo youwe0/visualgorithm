@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState, useCallback, useRef } from "react";
+import FallingSymbols from "./FallingSymbols";
 
 const numRows = 30;
 const numCols = 40;

@@ -258,6 +258,47 @@ body {
   }
 }
 
+/* Falling Symbols Animation */
+@keyframes symbolFall {
+  0% {
+    top: -50px;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    top: calc(100% - 30px);
+    opacity: 1;
+  }
+}
+
+@keyframes symbolBounce1 {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-40px);
+  }
+}
+
+@keyframes symbolBounce2 {
+  0% {
+    transform: translateY(-40px);
+  }
+
+  100% {
+    transform: translateY(-15px);
+  }
+}
+
 /* Rotate Gradient */
 @keyframes rotate-gradient {
   0% {
@@ -739,4 +780,26 @@ body {
   .hide-desktop {
     display: none !important;
   }
+}
+
+/* ======= FALLING SYMBOLS STYLES */
+
+.falling-symbols-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.falling-symbol {
+  position: absolute;
+  top: -50px;
+  font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  user-select: none;
+  pointer-events: none;
+  white-space: nowrap;
 }

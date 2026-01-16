@@ -4,6 +4,7 @@ import { bubbleSort } from "../Algorithms/Sorting/BubbleSort";
 import { selectionSort } from "../Algorithms/Sorting/SelectionSort";
 import { generateArray } from "../Utils/GenerateArray";
 import { useState, useEffect } from "react";
+import FallingSymbols from "./FallingSymbols";
 
 const SortingVisualizer = () => {
   const [array, setArray] = useState([]);
@@ -162,7 +163,7 @@ const SortingVisualizer = () => {
     <div className="min-h-screen bg-[#050505] relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-mesh opacity-30" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-50" />
+      <FallingSymbols />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}
