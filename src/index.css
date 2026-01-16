@@ -63,6 +63,15 @@ body {
   overflow-x: hidden;
 }
 
+.falling-symbol {
+  position: absolute;
+  top: -40px;
+  font-size: 1.4rem;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;

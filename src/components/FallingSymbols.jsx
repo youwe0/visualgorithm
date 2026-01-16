@@ -2,90 +2,95 @@ import { useEffect, useState, useCallback } from 'react';
 import { getRandomSymbol } from '../Utils/csSymbols';
 
 const FallingSymbol = ({ symbol, left, delay, duration, onComplete, id }) => {
-  const [phase, setPhase] = useState('falling'); // falling, bounce1, bounce2, done
+  const [phase, setPhase] = useState('falling');
+  const [bottom, setBottom] = useState(null);
 
   useEffect(() => {
-    const fallTimer = setTimeout(() => {
-      setPhase('bounce1');
-    }, duration * 1000);
+    const timers = [];
 
-    const bounce1Timer = setTimeout(() => {
-      setPhase('bounce2');
-    }, duration * 1000 + 300);
+    // Touch ground
+    timers.push(
+      setTimeout(() => {
+        setBottom(0);
+        setPhase('jump1');
+      }, duration * 1000)
+    );
 
-    const bounce2Timer = setTimeout(() => {
-      setPhase('done');
-    }, duration * 1000 + 500);
+    timers.push(
+      setTimeout(() => setPhase('jump2'), duration * 1000 + 350)
+    );
 
-    const removeTimer = setTimeout(() => {
-      onComplete(id);
-    }, duration * 1000 + 700);
+    timers.push(
+      setTimeout(() => setPhase('done'), duration * 1000 + 650)
+    );
 
-    return () => {
-      clearTimeout(fallTimer);
-      clearTimeout(bounce1Timer);
-      clearTimeout(bounce2Timer);
-      clearTimeout(removeTimer);
-    };
+    timers.push(
+      setTimeout(() => onComplete(id), 5000)
+    );
+
+    return () => timers.forEach(clearTimeout);
   }, [duration, id, onComplete]);
 
-  const getAnimationStyle = () => {
-    const baseStyle = {
-      left: `${left}%`,
-      animationDelay: `${delay}s`,
-      animationDuration: `${duration}s`,
-    };
+  const baseStyle = {
+    left: `${left}%`,
+    animationDelay: `${delay}s`,
+  };
 
+  const getStyle = () => {
     switch (phase) {
       case 'falling':
         return {
           ...baseStyle,
           animation: `symbolFall ${duration}s linear forwards`,
         };
-      case 'bounce1':
+
+      case 'jump1':
         return {
           ...baseStyle,
-          bottom: '0px',
+          bottom,
           top: 'auto',
-          animation: 'symbolBounce1 0.3s ease-out forwards',
+          animation: 'symbolJump1 0.35s ease-out forwards',
         };
-      case 'bounce2':
+
+      case 'jump2':
         return {
           ...baseStyle,
-          bottom: '0px',
+          bottom,
           top: 'auto',
-          animation: 'symbolBounce2 0.2s ease-out forwards',
+          animation: 'symbolJump2 0.25s ease-out forwards',
         };
+
       case 'done':
         return {
           ...baseStyle,
-          bottom: '0px',
+          bottom,
           top: 'auto',
           opacity: 0,
-          transition: 'opacity 0.2s ease-out',
+          transition: 'opacity 0.25s ease-out',
         };
+
       default:
         return baseStyle;
     }
   };
 
   const colors = [
-    'rgba(0, 229, 255, 0.6)',   // Cyan
-    'rgba(139, 92, 246, 0.6)',  // Purple
-    'rgba(34, 197, 94, 0.5)',   // Green
-    'rgba(236, 72, 153, 0.5)',  // Pink
-    'rgba(245, 158, 11, 0.5)',  // Amber
+    'rgba(0,229,255,0.6)',
+    'rgba(139,92,246,0.6)',
+    'rgba(34,197,94,0.5)',
+    'rgba(236,72,153,0.5)',
+    'rgba(245,158,11,0.5)',
   ];
 
-  const randomColor = colors[Math.floor(Math.random() * colors.length)];
+  const color = colors[Math.floor(Math.random() * colors.length)];
 
   return (
     <span
       className="falling-symbol"
       style={{
-        ...getAnimationStyle(),
-        color: randomColor,
-        textShadow: `0 0 10px ${randomColor}`,
+        ...getStyle(),
+        color,
+        textShadow: `0 0 10px ${color}`,
       }}
     >
       {symbol}
@@ -95,61 +100,30 @@ const FallingSymbol = ({ symbol, left, delay, duration, onComplete, id }) => {
 
 const FallingSymbols = () => {
   const [symbols, setSymbols] = useState([]);
-  const [idCounter, setIdCounter] = useState(0);
 
   const removeSymbol = useCallback((id) => {
     setSymbols(prev => prev.filter(s => s.id !== id));
   }, []);
 
-  const addSymbol = useCallback(() => {
-    const newSymbol = {
-      id: idCounter,
-      symbol: getRandomSymbol(),
-      left: Math.random() * 95,
-      delay: 0,
-      duration: 3 + Math.random() * 4, // 3-7 seconds fall time
-    };
-
-    setSymbols(prev => [...prev, newSymbol]);
-    setIdCounter(prev => prev + 1);
-  }, [idCounter]);
-
   useEffect(() => {
-    // Initial burst of symbols
-    const initialCount = 15;
-    for (let i = 0; i < initialCount; i++) {
-      setTimeout(() => addSymbol(), i * 200);
-    }
-
-    // Continuous spawning
-    const spawnInterval = setInterval(() => {
-      if (Math.random() > 0.3) { // 70% chance to spawn
-        addSymbol();
-      }
-    }, 400);
-
-    return () => clearInterval(spawnInterval);
-  }, []);
-
-  // Separate effect for continuous spawning after initial load
-  useEffect(() => {
-    const spawnInterval = setInterval(() => {
+    const interval = setInterval(() => {
       setSymbols(prev => {
-        if (prev.length < 30) { // Max 30 symbols at once
-          const newSymbol = {
+        if (prev.length >= 30) return prev;
+
+        return [
+          ...prev,
+          {
             id: Date.now() + Math.random(),
             symbol: getRandomSymbol(),
             left: Math.random() * 95,
             delay: 0,
             duration: 3 + Math.random() * 4,
-          };
-          return [...prev, newSymbol];
-        }
-        return prev;
+          },
+        ];
       });
-    }, 500);
+    }, 400);
 
-    return () => clearInterval(spawnInterval);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -157,11 +131,7 @@ const FallingSymbols = () => {
       {symbols.map(sym => (
         <FallingSymbol
           key={sym.id}
-          id={sym.id}
-          symbol={sym.symbol}
-          left={sym.left}
-          delay={sym.delay}
-          duration={sym.duration}
+          {...sym}
           onComplete={removeSymbol}
         />
       ))}
