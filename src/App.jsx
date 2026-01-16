@@ -1,43 +1,38 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
 import SortingVisualizer from "./components/SortingVisualizer";
 import SearchVisualizer from "./components/SearchVisualizer";
 import PathfindingVisualizer from "./components/PathfindingVisualizer";
-import Footer from "./components/Footer";
 import GameOfLife from "./components/Lifegame";
 import Navbar from "./components/Navbar";
+import Landing from "./components/Landing";
 
 const App = () => {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <div className="flex-grow">
-        <Navbar />
+  const location = useLocation();
+  const isLanding = location.pathname === "/";
 
-        <Routes>
-          {/* Define the routes here */}
+  return (
+    <div className="min-h-screen bg-[#050505]">
+      {/* Only show navbar on non-landing pages */}
+      {!isLanding && <Navbar />}
+
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {/* Landing Page */}
+          <Route path="/" element={<Landing />} />
+
+          {/* Visualizer Routes */}
           <Route path="/pathfinding" element={<PathfindingVisualizer />} />
           <Route path="/sorting" element={<SortingVisualizer />} />
           <Route path="/search" element={<SearchVisualizer />} />
-          <Route path="/Lifegame" element={<GameOfLife />} />
-          {/* <Route path="/Lifegame" element={<Landing/>} /> */}
+          <Route path="/lifegame" element={<GameOfLife />} />
 
-
-          {/* Default route, in case no match */}
-          <Route path="*" element={<PathfindingVisualizer />} />
-
+          {/* Fallback to Landing */}
+          <Route path="*" element={<Landing />} />
         </Routes>
-      </div>
-      <Footer />
+      </AnimatePresence>
     </div>
   );
 };
 
 export default App;
-
-
-
-
-
-
-
-
